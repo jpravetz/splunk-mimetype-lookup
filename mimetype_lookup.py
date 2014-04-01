@@ -4,20 +4,12 @@ import sys
 import re
 import csv
 
-""" An adapter that takes CSV as input, performs a lookup to the operating
-    system hostname resolution facilities, then returns the CSV results 
+""" An adapter that takes CSV as input, performs a lookup to map mime types
+    to a more common file type (eg. 'MSWord'), then returns the CSV results
 
-    This is intended as an example of creating external lookups in general.
-
-    Note that the script offers mapping both ways, from host to IP and from IP
-    to host.  
-    
     Bidrectional mapping is always required when using an external lookup as an
     'automatic' lookup: one configured to be used without explicit reference in
     a search.
-
-    In the other use mode, eg in a search string as "|lookup lookupname", it is
-    sufficient to provide only the mappings that will be used.
 """
 
 
