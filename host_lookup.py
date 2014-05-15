@@ -28,15 +28,15 @@ def rlookup(service):
 def mapHostnameUrl(url):
     result = url
     urlparts = urlparse.urlparse(url)
-    if urlparts
+    if urlparts is not None:
         result = urlparts.netloc
         hparts = urlparts.netloc.split('.')
-        if hparts 
+        if hparts is not None:
             result = ".".join(len(hparts[-2]) < 4 and hparts[-3:] or hparts[-2:])
             # At this point, if we want to combine hostnames (eg. box.com, box12.com) we can do so
-            if result == 'force.com'
+            if result == 'force.com':
                 result = 'salesforce.com'
-            if result == 'box.net'
+            if result == 'box.net':
                 result = 'box.com'
     return result
 

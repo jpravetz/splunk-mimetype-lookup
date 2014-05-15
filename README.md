@@ -40,7 +40,7 @@ Add the following lines to the existing (or new) file $SPLUNK_HOME/etc/system/lo
 [mimetype_lookup]
 lookup_mimetype = MimeTypeLookup mimeType OUTPUT fileType
 
-[=host_lookup]
+[host_lookup]
 lookup_host = HostUrlLookup url OUTPUT host
 ```
 
