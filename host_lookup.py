@@ -42,11 +42,11 @@ def mapHostnameUrl(url):
 
 def main():
     if len(sys.argv) != 3:
-        print "Usage: python host_lookup.py [url field] [hostname field]"
+        print "Usage: python host_lookup.py [urlfieldname] [hostfieldname]"
         sys.exit(1)
 
-    hostfield = sys.argv[1]
-    urlfield = sys.argv[2]
+    urlfield = sys.argv[1]
+    hostfield = sys.argv[2]
 
     infile = sys.stdin
     outfile = sys.stdout
@@ -58,20 +58,21 @@ def main():
     w.writeheader()
 
     for result in r:
+
         # Perform the lookup or reverse lookup if necessary
         if result[hostfield] and result[urlfield]:
             # both fields were provided, just pass it along
             w.writerow(result)
 
         elif result[hostfield]:
-            # only mimetype was provided, add filetype
-            result[urlfield] = lookup(result[hostfield])
+            # only host was provided, add url (which we can't really do)
+            result[urlfield] = rlookup(result[hostfield])
             if result[urlfield]:
                 w.writerow(result)
 
         elif result[urlfield]:
-            # only filetype was provided, add mimetype
-            result[hostfield] = rlookup(result[urlfield])
+            # only url was provided, add host
+            result[hostfield] = lookup(result[urlfield])
             if result[hostfield]:
                 w.writerow(result)
 
