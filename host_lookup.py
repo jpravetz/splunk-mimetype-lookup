@@ -3,6 +3,7 @@
 import sys
 import csv
 import urlparse
+import re
 
 """ An adapter that takes CSV as input, performs a lookup to map URLS
     to service names, then returns the CSV results
@@ -30,18 +31,22 @@ def mapHostnameUrl(url):
     urlparts = urlparse.urlparse(url)
     if urlparts is not None:
         result = urlparts.netloc
-        hparts = urlparts.netloc.split('.')
-        if hparts is not None:
-            hlen = len(hparts)
-            if hlen >= 2:
-                result = ".".join(hparts[hlen-2:])
-            else:
-                result = hparts[0]
-            # At this point, if we want to combine hostnames (eg. box.com, box12.com) we can do so
-            if result == 'force.com':
-                result = 'salesforce.com'
-            if result == 'box.net':
-                result = 'box.com'
+        if urlparts.port:
+            result = urlparts.netloc.split(':')[0]
+        is_ip = re.match("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", result)
+        if not is_ip:
+            hparts = urlparts.netloc.split('.')
+            if hparts is not None:
+                hlen = len(hparts)
+                if hlen >= 2:
+                    result = ".".join(hparts[hlen-2:])
+                else:
+                    result = hparts[0]
+        # At this point, if we want to combine hostnames (eg. box.com, box12.com) we can do so
+        if result == 'force.com':
+            result = 'salesforce.com'
+        if result == 'box.net':
+            result = 'box.com'
     return result
 
 def main():
