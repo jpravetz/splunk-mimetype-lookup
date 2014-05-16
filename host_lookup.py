@@ -32,7 +32,11 @@ def mapHostnameUrl(url):
         result = urlparts.netloc
         hparts = urlparts.netloc.split('.')
         if hparts is not None:
-            result = ".".join(len(hparts[-2]) < 4 and hparts[-3:] or hparts[-2:])
+            hlen = len(hparts)
+            if hlen >= 2:
+                result = ".".join(hparts[hlen-2:])
+            else:
+                result = hparts[0]
             # At this point, if we want to combine hostnames (eg. box.com, box12.com) we can do so
             if result == 'force.com':
                 result = 'salesforce.com'

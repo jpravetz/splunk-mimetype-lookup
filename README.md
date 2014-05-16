@@ -25,9 +25,9 @@ max_matches = 1
 min_matches = 0
 
 [HostUrlLookup]
-external_cmd =host_lookup.py url host
+external_cmd =host_lookup.py url service
 external_type = python
-fields_list = url,host
+fields_list = url,service
 # filename = hostUrl.csv
 max_matches = 1
 min_matches = 0
@@ -41,7 +41,7 @@ Add the following lines to the existing (or new) file $SPLUNK_HOME/etc/system/lo
 lookup_mimetype = MimeTypeLookup mimeType OUTPUT fileType
 
 [host_lookup]
-lookup_host = HostUrlLookup url OUTPUT host
+lookup_host = HostUrlLookup url OUTPUT service
 ```
 
 Use this mimetype lookup syntax in searches: ```lookup MimeTypeLookup mimeType```
